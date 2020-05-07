@@ -89,3 +89,60 @@ void myNameSpace::checkAdminPasswordAndUsername(bool& isLogin)
 		}
 	} while (c == 'y');
 }
+bool myNameSpace::possibleSorts(string& buffer)
+{
+	if (buffer.compare(0, 5, "title") == 0)
+	{
+		buffer.erase(0, 5);
+		return true;
+	}
+	if (buffer.compare(0, 6, "author") == 0)
+	{
+		buffer.erase(0, 6);
+		return true;
+	}
+	if (buffer.compare(0, 4, "year") == 0)
+	{
+		buffer.erase(0, 4);
+		return true;
+	}
+	if (buffer.compare(0, 6, "rating") == 0)
+	{
+		buffer.erase(0, 6);
+		return true;
+	}
+	return false;
+}
+bool myNameSpace::isDescorAsc(string& buffer)
+{
+	if (buffer.size() > 5)
+		return false;
+	if (buffer.size() == 0)
+		return true;
+	buffer.erase(0, 1);
+	if (buffer.compare(0, 4, "desc") == 0)
+		return true;
+	if (buffer.compare(0, 3, "asc") == 0)
+		return true;
+	return false;
+}
+string myNameSpace::booksFindOptions(string& option)
+{
+	if (option.compare(0, 5, "title") == 0)
+	{
+		option.erase(0, 6);
+		return "title";
+	}
+	else if (option.compare(0, 6, "author") == 0)
+	{
+		option.erase(0, 7);
+		return "author";
+	}
+	else if (option.compare(0, 3, "tag") == 0)
+	{
+		option.erase(0, 3);
+		return "tag";
+	}
+	else
+		return "error";
+}

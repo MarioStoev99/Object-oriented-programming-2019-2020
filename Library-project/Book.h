@@ -19,7 +19,6 @@ private :
 public :
 	Book(const string = "", const string = "", const string = "",
 		string = "", int = 0, int = 0, double = 0, int = 0);
-	void print() const;
 	friend ostream& operator<<(ostream&,const Book&);
 	string getAuthor() const { return author; }
 	string getTitle() const { return title; }

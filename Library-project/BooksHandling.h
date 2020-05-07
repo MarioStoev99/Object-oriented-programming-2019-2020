@@ -40,9 +40,9 @@ public:
 	bool isValidbookId(string& buffer) const;
 	void removeBookFromArray(string nameofBook);
 
+	//books find
+	void print(const string,const string) const;
 	//Sorts
-	bool possibleSorts(string&) const;
-	bool isDescorAsc(string&) const;
 	void cutTypeSort(string&, const string) const;
 	void bubbleSort(f);
 	void callFunctionsSort(const string, const string);

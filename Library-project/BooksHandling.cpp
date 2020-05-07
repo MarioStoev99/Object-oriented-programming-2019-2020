@@ -81,6 +81,7 @@ void BooksHandling::readBook(ifstream& file, size_t index)
 	getline(file, _description, ',');
 	file >> _issuanceYear >> _keyWords
 		>> _rating >> _uniqueNumberofLibrary;
+	file.ignore();
 	chargeBookData(_author, _title, _description, _genre, _issuanceYear,
 		_keyWords, _rating, _uniqueNumberofLibrary, index);
 }
@@ -107,7 +108,7 @@ void BooksHandling::save() const
 		file << books[i].getAuthor() << "," << books[i].getTitle() << ","
 			<< books[i].getGenre() << "," << books[i].getDescription() << ","
 			<< books[i].getissuanceYear() << " " << books[i].getKeyWords() << " "
-			<< books[i].getRating() << " " << books[i].getUniqueNumberofLibrary();
+			<< books[i].getRating() << " " << books[i].getUniqueNumberofLibrary() << endl;
 	}
 	cout << "Save successfully.Please choose an operation below : " << endl;
 	file.close();
@@ -196,12 +197,12 @@ void BooksHandling::addFeaturesToBook(size_t index, string temp, Book& b) const
 }
 bool BooksHandling::isValidbookId(string& buffer) const
 {
-	if (buffer.size() != 4)
-		return false;
-	for (int i = 0; i < 4; i++)
+	int i = 0;
+	while(i < buffer.size())
 	{
-		if (myNameSpace::isDigit(buffer[i]))
+		if (!myNameSpace::isDigit(buffer[i]))
 			return false;
+		i++;
 	}
 	return true;
 }
@@ -226,43 +227,6 @@ void BooksHandling::removeBookFromArray(string nameofBook)
 	system("cls");
 	cout << "This book does not exist in Library.Choose an operation : " << endl;
 }
-bool BooksHandling::possibleSorts(string& buffer) const
-{
-	if (buffer.compare(0, 5, "title") == 0)
-	{
-		buffer.erase(0, 5);
-		return true;
-	}
-	if (buffer.compare(0, 6, "author") == 0)
-	{
-		buffer.erase(0, 6);
-		return true;
-	}
-	if (buffer.compare(0, 4, "year") == 0)
-	{
-		buffer.erase(0, 4);
-		return true;
-	}
-	if (buffer.compare(0, 6, "rating") == 0)
-	{
-		buffer.erase(0, 6);
-		return true;
-	}
-	return false;
-}
-bool BooksHandling::isDescorAsc(string& buffer) const
-{
-	if (buffer.size() > 5)
-		return false;
-	if (buffer.size() == 0)
-		return true;
-	buffer.erase(0, 1);
-	if (buffer.compare(0, 4, "desc") == 0)
-		return true;
-	if (buffer.compare(0, 3, "asc") == 0)
-		return true;
-	return false;
-}
 void BooksHandling::bubbleSort(f function)
 {
 	bool changed = false;
@@ -286,30 +250,26 @@ void BooksHandling::cutTypeSort(string& temp, const string buffer) const
 {
 	if (buffer.compare(0, 4, "desc") == 0)
 		temp.erase(temp.size() - 5);
-	if (buffer.compare(0, 3, "asc"))
+	if (buffer.compare(0, 3, "asc") == 0)
 		temp.erase(temp.size() - 4);
 }
 void BooksHandling::callFunctionsSort(const string descOrAsc, const string typeSort)
 {
-	if (descOrAsc.compare("") == 0 || descOrAsc.compare("asc") &&
-		typeSort.compare("author"))
+	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "author")
 		bubbleSort(&BooksHandling::ascAndAuthor);
-	if (descOrAsc.compare("") == 0 || descOrAsc.compare("asc") &&
-		typeSort.compare("title"))
+	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "title")
 		bubbleSort(&BooksHandling::ascAndTitle);
-	if (descOrAsc.compare("") == 0 || descOrAsc.compare("asc") &&
-		typeSort.compare("rating"))
+	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "rating")
 		bubbleSort(&BooksHandling::ascAndRating);
-	if (descOrAsc.compare("") == 0 || descOrAsc.compare("asc") &&
-		typeSort.compare("year"))
+	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "year")
 		bubbleSort(&BooksHandling::ascAndYear);
-	if (descOrAsc.compare("desc") && typeSort.compare("title"))
+	if (descOrAsc == "desc" && typeSort == "title")
 		bubbleSort(&BooksHandling::descAndTitle);
-	if (descOrAsc.compare("desc") && typeSort.compare("author"))
+	if (descOrAsc == "desc" && typeSort == "author")
 		bubbleSort(&BooksHandling::descAndAuthor);
-	if (descOrAsc.compare("desc") && typeSort.compare("rating"))
+	if (descOrAsc == "desc" && typeSort == "rating")
 		bubbleSort(&BooksHandling::descAndRating);
-	if (descOrAsc.compare("desc") && typeSort.compare("year"))
+	if (descOrAsc == "desc" && typeSort == "year")
 		bubbleSort(&BooksHandling::descAndYear);
 }
 bool BooksHandling::ascAndTitle(size_t i, size_t j) const
@@ -343,4 +303,24 @@ bool BooksHandling::descAndRating(size_t i, size_t j) const
 bool BooksHandling::descAndYear(size_t i, size_t j) const
 {
 	return books[i].getissuanceYear() > books[j].getissuanceYear();
+}
+void BooksHandling::print(const string option,const string bookFeature) const
+{
+	for (int i = 0; i < booksSize; i++)
+	{
+		if (option == "title")
+		{
+			if (books[i].getTitle() == bookFeature)
+				cout << books[i];
+		}
+		else if (option == "author")
+		{
+			if (books[i].getAuthor() == bookFeature)
+				cout << books[i];
+		}
+		//else
+		//{
+			
+		//}
+	}
 }

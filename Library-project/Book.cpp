@@ -16,5 +16,5 @@ Book::Book(const string _author, const string _title, const string _genre,
 ostream& operator<<(ostream& o, const Book& book)
 {
 	return o << book.author << " " << book.title << " "
-		<< book.genre << " " << book.uniqueNumberofLibrary;
+		<< book.genre << " " << book.uniqueNumberofLibrary << endl;
 }

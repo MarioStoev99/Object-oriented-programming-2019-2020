@@ -87,16 +87,30 @@ void Library::openAPP()
 		}
 		else if (myNameSpace::isValidOperation(buffer,"books find ") && isLogin)
 		{
-			//controlBooks.booksFind(buffer);
+			system("cls");
+			afterOpenFileOperations();
+			string temp = myNameSpace::booksFindOptions(buffer);
+			if (temp == "error")
+			{
+				system("cls");
+				cout << "invalid option.Please try again" << endl;
+				afterOpenFileOperations();
+			}
+			controlBooks.print(temp, buffer);
 		}
 		else if (myNameSpace::isValidOperation(buffer,"books sort ") && isLogin)
 		{
+			system("cls");
+			afterOpenFileOperations();
 			string temp = buffer;
-			assert(controlBooks.possibleSorts(buffer) == 1);
-			assert(controlBooks.isDescorAsc(buffer) == 1);
+			if (!myNameSpace::possibleSorts(buffer) || !myNameSpace::isDescorAsc(buffer))
+			{
+				system("cls");
+				cout << "Invalid command,please follow instructions" << endl;
+				afterOpenFileOperations();
+			}
 			controlBooks.cutTypeSort(temp, buffer);
-			controlBooks.callFunctionsSort(temp,buffer);
-			cout << buffer << " " << temp << endl;
+			controlBooks.callFunctionsSort(buffer,temp);
 			controlBooks.print();
 		}
 		else if (myNameSpace::isValidOptionAdd(buffer, "users add ") && isLogin)
@@ -150,7 +164,7 @@ void Library::afterOpenFileOperations() const
 		cout << 5 << ")logout" << endl;
 		cout << 6 << ")books all" << endl;
 		cout << 7 << ")books info <isbn_value>" << endl;
-		cout << 8 << ")books find" << endl;
+		cout << 8 << ")books find <option> <option_string>" << endl;
 		cout << 9 << ")books sort <option> [asc|desc]" << endl;
 		cout << 10 << ")users add <user> <password>" << endl;
 		cout << 11 << ")users remove <user>" << endl;

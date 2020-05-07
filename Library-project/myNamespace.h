@@ -16,5 +16,9 @@ namespace myNameSpace
 	bool isValidOptionRemove(string& buffer, const string temp);
 	bool isValidOperation(string& buffer, string temp);
 	void checkAdminPasswordAndUsername(bool& isLogin);
+	bool possibleSorts(string& buffer);
+	bool isDescorAsc(string& buffer);
+	string booksFindOptions(string&);
+	
 }
 
