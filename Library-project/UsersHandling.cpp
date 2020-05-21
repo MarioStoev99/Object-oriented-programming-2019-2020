@@ -55,6 +55,7 @@ void UsersHandling::addUsers(string buffer) const
 	}
 	else
 	{
+		system("cls");
 		myNameSpace::checkAdminPasswordAndUsername(isLogin);
 		system("cls");
 		if (isLogin == true)
@@ -109,7 +110,7 @@ void UsersHandling::removeUser(const string removeUser)
 			{
 				swap(users[i], users[size - 1]);
 				size--;
-				cout << "successfilly you have removed user from list" << endl;
+				cout << "Successfilly you have removed user from list!" << endl;
 				serialize();
 				return;
 			}

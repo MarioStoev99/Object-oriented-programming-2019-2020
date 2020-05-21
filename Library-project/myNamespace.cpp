@@ -9,7 +9,30 @@ void myNameSpace::initAccount(string& username, string& password)
 	cout << "Username : ";
 	getline(cin, username);
 	cout << "Password : ";
-	getline(cin, password);
+	char c;
+	unsigned cnt = 0;
+	while (true)
+	{
+		c = _getch();
+		if (c == '\r')
+			break;
+		else if (c == '\b')
+		{
+			if (cnt > 0)
+			{
+				cnt--;
+				password.pop_back();
+				cout << '\b' << " " << '\b';
+			}
+		}
+		else
+		{
+			cnt++;
+			cout << "*";
+			password += c;
+		}
+	}
+	cout << endl;
 }
 void myNameSpace::initFileName(string& buffer)
 {
@@ -82,6 +105,7 @@ void myNameSpace::checkAdminPasswordAndUsername(bool& isLogin)
 		}
 		else
 		{
+			system("cls");
 			cout << "invalid admin nickname or password.If you want try again please write 'y',else write 'n'" << endl;
 			cin >> c;
 			cin.ignore();

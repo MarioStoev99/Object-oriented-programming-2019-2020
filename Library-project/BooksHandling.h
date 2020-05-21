@@ -33,13 +33,15 @@ public:
 	void saveAs();
 	void booksInfo(string uniqueNumber);
 	void print() const;
-	void addBookToArray(const Book& book);
 	void initBook(Book& b) const;
 	void features(size_t index) const;
 	void addFeaturesToBook(size_t index, string temp, Book& b) const;
 	bool isValidbookId(string& buffer) const;
 	void removeBookFromArray(string nameofBook);
 
+	//add books to array
+	bool ExistSushId(const Book&) const;
+	void addBookToArray(const Book& book);
 	//books find
 	void print(const string,const string) const;
 	//Sorts

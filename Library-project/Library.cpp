@@ -128,7 +128,13 @@ void Library::openAPP()
 		{
 			Book b;
 			controlBooks.initBook(b);
-			controlBooks.addBookToArray(b);
+			if (controlBooks.ExistSushId(b))
+			{
+				system("cls");
+				cout << "This unique number has already existed!!" << endl;
+			}
+			else
+				controlBooks.addBookToArray(b);
 			afterOpenFileOperations();
 		}
 		else if (myNameSpace::isValidOptionRemove(buffer, "books remove ") && isLogin)
@@ -223,15 +229,18 @@ void Library::login(bool& isLogin)
 		{
 			if (isAlreadyLogin(username))
 			{
+				system("cls");
 				cout << "You are already logged in" << endl;
 				return;
 			}
 			isLogin = true;
+			system("cls");
 			cout << "Welcome," << username << "!Choose an operation below.." << endl;
 			changeDataUser(username, password);
 			return;
 		}
 	}
+	system("cls");
 	cout << "Invalid nickname or password !" << endl;
 }
 bool Library::isAlreadyLogin(const string username) const

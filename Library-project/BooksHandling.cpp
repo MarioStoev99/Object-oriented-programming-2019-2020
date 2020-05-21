@@ -133,10 +133,14 @@ void BooksHandling::booksInfo(string uniqueNumber)
 	{
 		if (books[i].getUniqueNumberofLibrary() == uniqNumber)
 		{
-			cout << books[i].getAuthor() << " " << books[i].getTitle() << " "
-				<< books[i].getGenre() << " " << books[i].getDescription() << " "
-				<< books[i].getissuanceYear() << " " << books[i].getKeyWords() << " "
-				<< books[i].getRating() << " " << books[i].getUniqueNumberofLibrary() << endl;
+			cout << "Author : " << books[i].getAuthor() << endl;
+			cout << "Title : " << books[i].getTitle() << endl;
+			cout << "Genre : " << books[i].getGenre() << endl;
+			cout << "Description : " << books[i].getDescription() << endl;
+			cout << "Issuance Year : " << books[i].getissuanceYear() << endl;
+			cout << "Key words : " << books[i].getKeyWords() << endl;
+			cout << "Rating : " << books[i].getRating() << endl;
+			cout << "Unique number : " << books[i].getUniqueNumberofLibrary() << endl;
 			return;
 		}
 	}
@@ -145,15 +149,29 @@ void BooksHandling::print() const
 {
 	for (int i = 0; i < booksSize; i++)
 		cout << books[i];
-	cout << endl;
 }
 void BooksHandling::addBookToArray(const Book& book)
 {
 	if (booksSize >= booksCap)
 		resize();
-	books[booksSize++] = book;
+	bool isLogin = false;
 	system("cls");
-	cout << "Successfully added a book to Library.If you want this changed to be reflected forever,please click save or save as :)" << endl;
+	myNameSpace::checkAdminPasswordAndUsername(isLogin);
+	system("cls");
+	if (isLogin)
+	{
+		books[booksSize++] = book;
+		cout << "Successfully added a book to Library.If you want this changed to be reflected forever,please click save or save as :)" << endl;
+	}
+}
+bool BooksHandling::ExistSushId(const Book& b) const
+{
+	for (int i = 0; i < booksSize; i++)
+	{
+		if (books[i].getUniqueNumberofLibrary() == b.getUniqueNumberofLibrary())
+			return true;
+	}
+	return false;
 }
 void BooksHandling::initBook(Book& b) const
 {
@@ -209,6 +227,7 @@ bool BooksHandling::isValidbookId(string& buffer) const
 void BooksHandling::removeBookFromArray(string nameofBook)
 {
 	bool isLogin = false;
+	system("cls");
 	myNameSpace::checkAdminPasswordAndUsername(isLogin);
 	if (isLogin == true)
 	{
@@ -219,7 +238,7 @@ void BooksHandling::removeBookFromArray(string nameofBook)
 				swap(books[i], books[booksSize - 1]);
 				booksSize--;
 				system("cls");
-				cout << "Successfully remove book.Choose another operation below : " << endl;
+				cout << "Successfully removed book.If you want this changed to be reflect forever,please click save or save as :) " << endl;
 				return;
 			}
 		}
@@ -255,13 +274,13 @@ void BooksHandling::cutTypeSort(string& temp, const string buffer) const
 }
 void BooksHandling::callFunctionsSort(const string descOrAsc, const string typeSort)
 {
-	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "author")
+	if ((descOrAsc == "" || descOrAsc == "asc") && typeSort == "author")
 		bubbleSort(&BooksHandling::ascAndAuthor);
-	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "title")
+	if ((descOrAsc == "" || descOrAsc == "asc") && typeSort == "title")
 		bubbleSort(&BooksHandling::ascAndTitle);
-	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "rating")
+	if ((descOrAsc == "" || descOrAsc == "asc") && typeSort == "rating")
 		bubbleSort(&BooksHandling::ascAndRating);
-	if (descOrAsc == "" || descOrAsc == "asc" && typeSort == "year")
+	if ((descOrAsc == "" || descOrAsc == "asc") && typeSort == "year")
 		bubbleSort(&BooksHandling::ascAndYear);
 	if (descOrAsc == "desc" && typeSort == "title")
 		bubbleSort(&BooksHandling::descAndTitle);
@@ -318,9 +337,5 @@ void BooksHandling::print(const string option,const string bookFeature) const
 			if (books[i].getAuthor() == bookFeature)
 				cout << books[i];
 		}
-		//else
-		//{
-			
-		//}
 	}
 }
