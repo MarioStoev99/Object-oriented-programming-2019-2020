@@ -1,5 +1,6 @@
 #include "myNameSpace.h"
-String myNameSpace::getString(String& command)
+
+String AdditionalMethods::getString(String& command)
 {
 	String temp = command;
 	unsigned cnt = 0;
@@ -9,7 +10,7 @@ String myNameSpace::getString(String& command)
 	temp.erase(cnt, temp.lenght() - cnt);
 	return temp;
 }
-bool myNameSpace::isDigit(String s)
+bool AdditionalMethods::isDigit(String s)
 {
 	for (int i = 0; i < s.lenght(); i++)
 	{
@@ -18,7 +19,7 @@ bool myNameSpace::isDigit(String s)
 	}
 	return true;
 }
-int myNameSpace::getAge(String s)
+int AdditionalMethods::getAge(String s)
 {
 	if (!isDigit(s))
 		return -1;
@@ -27,7 +28,7 @@ int myNameSpace::getAge(String s)
 		throw exception("invalid age");
 	return age;
 }
-int myNameSpace::countSpaces(String temp)
+int AdditionalMethods::countSpaces(String temp)
 {
 	int cnt = 0;
 	for (int i = 0; i < temp.lenght() - 1; i++)
@@ -37,21 +38,52 @@ int myNameSpace::countSpaces(String temp)
 	}
 	return cnt;
 }
-void myNameSpace::commandForThreeSpaces(String& command,String& actor, String& action, String& subject, int& age)
+void AdditionalMethods::commandForThreeSpaces(String& command,String& actor, String& action, String& subject, int& age)
 {
-	actor = myNameSpace::getString(command);
+	actor = AdditionalMethods::getString(command);
 	command.erase(0, 1);
-	action = myNameSpace::getString(command);
+	action = AdditionalMethods::getString(command);
 	command.erase(0, 1);
-	subject = myNameSpace::getString(command);
+	subject = AdditionalMethods::getString(command);
 	command.erase(0, 1);
-	age = myNameSpace::getAge(command);
+	age = AdditionalMethods::getAge(command);
 }
-void myNameSpace::commandForTwoSpaces(String& command,String& actor, String& action, String& subject)
+void AdditionalMethods::commandForTwoSpaces(String& command,String& actor, String& action, String& subject)
 {
-	actor = myNameSpace::getString(command);
+	actor = AdditionalMethods::getString(command);
 	command.erase(0, 1);
-	action = myNameSpace::getString(command);
+	action = AdditionalMethods::getString(command);
 	command.erase(0, 1);
-	subject = myNameSpace::getString(command);
+	subject = AdditionalMethods::getString(command);
+}
+int AdditionalMethods::cntDigit(unsigned number)
+{
+	int cnt = 0;
+	while (number)
+	{
+		cnt++;
+		number /= 10;
+	}
+	return cnt;
+}
+String AdditionalMethods::itos(unsigned number)
+{
+	int cnt = cntDigit(number);
+	String temp;
+	temp.resize(cnt);
+	for (int i = cnt - 1; i >= 0; i--)
+	{
+		temp[i] = (number % 10) + '0';
+		number /= 10;
+	}
+	return temp;
+}
+void AdditionalMethods::c_str(char* temp,String filepath)
+{
+	int i;
+	for (i = 0; i < filepath.lenght(); i++)
+	{
+		temp[i] = filepath[i];
+	}
+	temp[i] = '\0';
 }

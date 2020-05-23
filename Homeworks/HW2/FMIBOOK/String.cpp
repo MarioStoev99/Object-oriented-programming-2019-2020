@@ -7,6 +7,17 @@ void String::copy(const String& other)
 		str[i] = other.str[i];
 	this->size = other.size;
 }
+void String::resize(int index)
+{
+	char* newStr = new char[index];
+	for (int i = 0; i < size; i++)
+	{
+		newStr[i] = str[i];
+	}
+	delete[] str;
+	str = newStr;
+	size = index;
+}
 void String::del()
 {
 	delete[] str;
@@ -131,7 +142,6 @@ void String::pop_back()
 }
 char& String::operator[](size_t index)
 {
-	//assert(index < 0 || index >= size);
 	return str[index];
 }
 int stoi(String s)

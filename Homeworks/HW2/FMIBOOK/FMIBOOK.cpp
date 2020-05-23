@@ -1,9 +1,5 @@
 #include <iostream>
-#include "User.h"
-#include "String.h"
-#include "myNameSpace.h"
 #include "Application.h"
-#include "PublicationText.h"
 using namespace std;
 int main()
 {
@@ -12,9 +8,9 @@ int main()
 		Application app;
 		app.startApp();
 	}
-	catch (exception & e)
+	catch (exception& e)
 	{
-		cout << "exception : " << e.what();
+		cout << e.what();
 	}
 	return 0;
 }

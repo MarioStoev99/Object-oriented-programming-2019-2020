@@ -1,5 +1,4 @@
 #include "Application.h"
-Application::Application() {}
 void Application::startApp()
 {
 	String command, actor, action, subject;
@@ -7,8 +6,8 @@ void Application::startApp()
 	while (true)
 	{
 		cout << "$: ";
-		getline(cin, command);
-		int spaces = myNameSpace::countSpaces(command);
+			getline(cin, command);
+		int spaces = AdditionalMethods::countSpaces(command);
 		if (spaces == 0)
 		{
 			if (command == "quit")
@@ -16,9 +15,11 @@ void Application::startApp()
 			if (command == "info")
 				controlUsers.info();
 		}
+		else if (spaces == 1)
+			cout << "Unknown command" << endl;
 		else if (spaces >= 3)
 		{
-			myNameSpace::commandForThreeSpaces(command, actor, action, subject, age);
+			AdditionalMethods::commandForThreeSpaces(command, actor, action, subject, age);
 			size_t indexOfUserInArray = controlUsers.findPosUserInArray(actor);
 			if (indexOfUserInArray == -1)
 			{
@@ -73,12 +74,17 @@ void Application::startApp()
 		}
 		else if (spaces == 2)
 		{
-			myNameSpace::commandForTwoSpaces(command, actor, action, subject);
+			AdditionalMethods::commandForTwoSpaces(command, actor, action, subject);
 			size_t indexOfUserInArray = controlUsers.findPosUserInArray(actor);
 			bool haveRights = controlUsers.haveRights(indexOfUserInArray);
 			if (indexOfUserInArray == -1)
 			{
 				cout << "This user not exist" << endl;
+				continue;
+			}
+			if (controlUsers.blockUser(indexOfUserInArray))
+			{
+				cout << "Post not created - user blocked!" << endl;
 				continue;
 			}
 			if (action == "block")
@@ -95,15 +101,13 @@ void Application::startApp()
 			}
 			else if (action == "remove_user" && haveRights)
 			{
-				//controlPublications.print();
 				controlUsers.removeMember(subject, age);
 				controlPublications.removeUsersPosts(subject);
-				//controlPublications.print();
 			}
 			else if (action == "remove_post")
 			{
 				int id = 0;
-				if (myNameSpace::isDigit(subject))
+				if (AdditionalMethods::isDigit(subject))
 					id = stoi(subject);
 				if (controlUsers.haveRights(indexOfUserInArray))
 					controlPublications.removePost(id);
@@ -112,6 +116,21 @@ void Application::startApp()
 				else
 					cout << "You don't have rights to this post" << endl;
 			}
+			else if (action == "view_post")
+			{
+				int id = 0;
+				if (AdditionalMethods::isDigit(subject))
+				{
+					id = stoi(subject);
+					controlPublications.generatePublication(id);
+				}
+			}
+			else if (action == "view_all_posts")
+			{
+				controlPublications.generatePublication(subject);
+			}
+			else
+				cout << "Unknown command!" << endl;;
 		}
 	}
 }

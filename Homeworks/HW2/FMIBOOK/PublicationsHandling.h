@@ -24,5 +24,7 @@ public :
 	void removePost(int);
 	void removeUsersPosts(String);
 	unsigned countOfPersonalUserPosts(String) const;
+	void generatePublication(int) const;
+	void generatePublication(String) const;
 };
 

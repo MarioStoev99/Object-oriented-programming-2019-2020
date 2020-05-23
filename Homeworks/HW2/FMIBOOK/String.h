@@ -18,6 +18,7 @@ public:
 	String& operator=(const String&);
 	~String();
 
+	void resize(int);
 	int lenght() const;
 	friend ostream& operator<<(ostream&, const String&);
 	friend istream& getline(istream&, String&, char);

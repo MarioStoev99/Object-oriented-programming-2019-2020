@@ -15,7 +15,7 @@ private :
 	UsersHandling controlUsers;
 	PublicationsHandling controlPublications;
 public : 
-	Application();
+	Application() = default;
 	Application(const Application&) = delete;
 	Application& operator=(const Application&) = delete;
 	void startApp();

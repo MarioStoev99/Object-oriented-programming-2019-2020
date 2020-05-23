@@ -115,3 +115,34 @@ unsigned PublicationsHandling::countOfPersonalUserPosts(String name) const
 	}
 	return cnt;
 }
+void PublicationsHandling::generatePublication(int id) const
+{
+	for (int i = 0; i < size; i++)
+	{
+		bool findPublication = (publications[i]->getUniqueNumber() == id);
+		if (findPublication)
+		{
+			publications[i]->generatePost(false);
+			cout << "HTML view for post " << publications[i]->getUniqueNumber() << " created" << endl;
+			return;
+		}
+	}
+	cout << "No such post" << endl;
+}
+void PublicationsHandling::generatePublication(String name) const
+{
+	unsigned cnt = 0;
+	for (int i = 0; i < size; i++)
+	{
+		bool findPublication = (publications[i]->getName() == name);
+		if (findPublication)
+		{
+			publications[i]->generatePost(true);
+			cnt++;
+		}
+	}
+	if (cnt == 0)
+		cout << "No such posts" << endl;
+	else
+		cout << "HTML view for all " << name << " 's posts created" << endl;
+}
