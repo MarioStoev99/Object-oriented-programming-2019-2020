@@ -1,0 +1,6 @@
+5
+a,a,l,a,4 3 2 1
+b,b,b,b,2 2 2 2
+oxoboxo,oxoboxo,oxoboxo,oxoboxo,1999 3 9.4 1212
+d,d,d,d,4 4 4 4
+a,b,t,y,1 1 1 10
