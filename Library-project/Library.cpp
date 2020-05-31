@@ -73,7 +73,7 @@ void Library::openAPP()
 			afterOpenFileOperations();
 			controlBooks.print();
 		}
-		else if (myNameSpace::isValidOperation(buffer,"books info ") && isLogin)
+		else if (AuxiliaryMethodsForAllClasses::isValidOperation(buffer,"books info ") && isLogin)
 		{
 			if (!controlBooks.isValidbookId(buffer)) {
 				system("cls");
@@ -85,11 +85,11 @@ void Library::openAPP()
 			afterOpenFileOperations();
 			controlBooks.booksInfo(buffer);
 		}
-		else if (myNameSpace::isValidOperation(buffer,"books find ") && isLogin)
+		else if (AuxiliaryMethodsForAllClasses::isValidOperation(buffer,"books find ") && isLogin)
 		{
 			system("cls");
 			afterOpenFileOperations();
-			string temp = myNameSpace::booksFindOptions(buffer);
+			string temp = AuxiliaryMethodsForAllClasses::booksFindOptions(buffer);
 			if (temp == "error")
 			{
 				system("cls");
@@ -98,12 +98,12 @@ void Library::openAPP()
 			}
 			controlBooks.print(temp, buffer);
 		}
-		else if (myNameSpace::isValidOperation(buffer,"books sort ") && isLogin)
+		else if (AuxiliaryMethodsForAllClasses::isValidOperation(buffer,"books sort ") && isLogin)
 		{
 			system("cls");
 			afterOpenFileOperations();
 			string temp = buffer;
-			if (!myNameSpace::possibleSorts(buffer) || !myNameSpace::isDescorAsc(buffer))
+			if (!AuxiliaryMethodsForAllClasses::possibleSorts(buffer) || !AuxiliaryMethodsForAllClasses::isDescorAsc(buffer))
 			{
 				system("cls");
 				cout << "Invalid command,please follow instructions" << endl;
@@ -113,12 +113,12 @@ void Library::openAPP()
 			controlBooks.callFunctionsSort(buffer,temp);
 			controlBooks.print();
 		}
-		else if (myNameSpace::isValidOptionAdd(buffer, "users add ") && isLogin)
+		else if (AuxiliaryMethodsForAllClasses::isValidOptionAdd(buffer, "users add ") && isLogin)
 		{
 			controlUsers.addUsers(buffer);
 			afterOpenFileOperations();
 		}
-		else if (myNameSpace::isValidOptionRemove(buffer, "users remove ") && isLogin)
+		else if (AuxiliaryMethodsForAllClasses::isValidOptionRemove(buffer, "users remove ") && isLogin)
 		{
 			system("cls");
 			controlUsers.removeUser(buffer);
@@ -137,7 +137,7 @@ void Library::openAPP()
 				controlBooks.addBookToArray(b);
 			afterOpenFileOperations();
 		}
-		else if (myNameSpace::isValidOptionRemove(buffer, "books remove ") && isLogin)
+		else if (AuxiliaryMethodsForAllClasses::isValidOptionRemove(buffer, "books remove ") && isLogin)
 		{
 			controlBooks.removeBookFromArray(buffer);
 			afterOpenFileOperations();
@@ -202,14 +202,14 @@ void Library::open()
 	cout << "The last file name you set is  : " << controlBooks.getcurrentFileName() << endl;
 	cout << "Enter it without .txt and you will charge all books in Library: " << endl;
 	cout << "File name : ";
-	myNameSpace::initFileName(filepath);
+	AuxiliaryMethodsForAllClasses::initFileName(filepath);
 	ifstream file(filepath);
 	while (!file.is_open())
 	{
 		system("cls");
 		cout << "The file not exist!!The last file name you set is  : books.txt" << endl;
 		cout << "Enter it without .txt and you will charge all books in Library:  ";
-		myNameSpace::initFileName(filepath);
+		AuxiliaryMethodsForAllClasses::initFileName(filepath);
 		file.open(filepath);
 	}
 	system("cls");
@@ -221,16 +221,19 @@ void Library::login(bool& isLogin)
 	system("cls");
 	string username;
 	string password;
-	myNameSpace::initAccount(username, password);
+	AuxiliaryMethodsForAllClasses::initAccount(username, password);
 	ifstream file("users.txt");
-	while (!file.eof())
+	unsigned len = 0;
+	file >> len;
+	file.ignore();
+	for(int i = 0;i < len;i++)
 	{
-		if (myNameSpace::isExistAccountinFile(file, username,password))
+		if (AuxiliaryMethodsForAllClasses::isExistAccountinFile(file, username,password))
 		{
 			if (isAlreadyLogin(username))
 			{
 				system("cls");
-				cout << "You are already logged in" << endl;
+				cout << "You are already logged in!" << endl;
 				return;
 			}
 			isLogin = true;

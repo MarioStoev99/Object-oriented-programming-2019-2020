@@ -1,5 +1,5 @@
 #include "BooksHandling.h"
-#include "myNamespace.h"
+#include "AuxiliaryMethods.h"
 
 void BooksHandling::delBooks()
 {
@@ -156,7 +156,7 @@ void BooksHandling::addBookToArray(const Book& book)
 		resize();
 	bool isLogin = false;
 	system("cls");
-	myNameSpace::checkAdminPasswordAndUsername(isLogin);
+	AuxiliaryMethodsForAllClasses::checkAdminPasswordAndUsername(isLogin);
 	system("cls");
 	if (isLogin)
 	{
@@ -189,28 +189,28 @@ void BooksHandling::features(size_t index) const
 {
 	switch (index)
 	{
-	case 0: cout << "author : "; break;
-	case 1: cout << "title : "; break;
-	case 2: cout << "genre : "; break;
-	case 3: cout << "description : "; break;
-	case 4: cout << "issuance year : "; break;
-	case 5: cout << "key words : "; break;
-	case 6: cout << "rating : "; break;
-	case 7: cout << "unique number for library : ";
+		case 0: cout << "author : "; break;
+		case 1: cout << "title : "; break;
+		case 2: cout << "genre : "; break;
+		case 3: cout << "description : "; break;
+		case 4: cout << "issuance year : "; break;
+		case 5: cout << "key words : "; break;
+		case 6: cout << "rating : "; break;
+		case 7: cout << "unique number for library : ";
 	}
 }
 void BooksHandling::addFeaturesToBook(size_t index, string temp, Book& b) const
 {
 	switch (index)
 	{
-	case 0: b.setAuthor(temp); break;
-	case 1: b.setTitle(temp); break;
-	case 2: b.setGenre(temp); break;
-	case 3: b.setDescription(temp); break;
-	case 4: b.setIssuanceYear(stoi(temp)); break;
-	case 5: b.setKeyWords(stoi(temp)); break;
-	case 6: b.setRating(stod(temp)); break;
-	case 7: b.setUniqueNumberofLibrary(stoi(temp));
+		case 0: b.setAuthor(temp); break;
+		case 1: b.setTitle(temp); break;
+		case 2: b.setGenre(temp); break;
+		case 3: b.setDescription(temp); break;
+		case 4: b.setIssuanceYear(stoi(temp)); break;
+		case 5: b.setKeyWords(stoi(temp)); break;
+		case 6: b.setRating(stod(temp)); break;
+		case 7: b.setUniqueNumberofLibrary(stoi(temp));
 	}
 }
 bool BooksHandling::isValidbookId(string& buffer) const
@@ -218,7 +218,7 @@ bool BooksHandling::isValidbookId(string& buffer) const
 	int i = 0;
 	while(i < buffer.size())
 	{
-		if (!myNameSpace::isDigit(buffer[i]))
+		if (!AuxiliaryMethodsForAllClasses::isDigit(buffer[i]))
 			return false;
 		i++;
 	}
@@ -228,7 +228,7 @@ void BooksHandling::removeBookFromArray(string nameofBook)
 {
 	bool isLogin = false;
 	system("cls");
-	myNameSpace::checkAdminPasswordAndUsername(isLogin);
+	AuxiliaryMethodsForAllClasses::checkAdminPasswordAndUsername(isLogin);
 	if (isLogin == true)
 	{
 		for (int i = 0; i < booksSize; i++)

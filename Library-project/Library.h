@@ -6,7 +6,7 @@
 #include "UsersHandling.h"
 #include <fstream>
 #include <cassert>
-#include "myNamespace.h"
+#include "AuxiliaryMethods.h"
 
 class Library
 {

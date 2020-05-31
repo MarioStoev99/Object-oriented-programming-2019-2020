@@ -9,7 +9,7 @@ int main()
 	}
 	catch (exception& e)
 	{
-		cout << "exception : " << e.what() << endl;
+		cout << e.what() << endl;
 	}
 	return 0;
 }

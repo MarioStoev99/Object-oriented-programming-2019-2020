@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cassert>
 #include <fstream>
-#include "myNamespace.h"
+#include "AuxiliaryMethods.h"
 #include "User.h"
 using namespace std;
 class UsersHandling
@@ -21,7 +21,7 @@ private :
 	void print() const;
 public : 
 	void removeUser(const string);
-	void addUsers(string buffer) const;
+	void addUsers(string buffer);
 	bool isRegisteredinSystem(string username, string password) const;
 	void eraseUsernameAndPass(string& username, string& password) const;
 	void putinFile(string username, string password) const;

@@ -42,12 +42,13 @@ UsersHandling::~UsersHandling()
 {
 	clear();
 }
-void UsersHandling::addUsers(string buffer) const
+void UsersHandling::addUsers(string buffer)
 {
 	bool isLogin = false;
 	string username = buffer;
 	string password = buffer;
 	eraseUsernameAndPass(username, password);
+	deserialize();
 	if (isRegisteredinSystem(username, password))
 	{
 		system("cls");
@@ -56,7 +57,7 @@ void UsersHandling::addUsers(string buffer) const
 	else
 	{
 		system("cls");
-		myNameSpace::checkAdminPasswordAndUsername(isLogin);
+		AuxiliaryMethodsForAllClasses::checkAdminPasswordAndUsername(isLogin);
 		system("cls");
 		if (isLogin == true)
 		{
@@ -70,9 +71,9 @@ void UsersHandling::addUsers(string buffer) const
 bool UsersHandling::isRegisteredinSystem(string username, string password) const
 {
 	ifstream file("users.txt");
-	while (!file.eof())
+	for(int i = 0;i < size;i++)
 	{
-		if (myNameSpace::isExistAccountinFile(file, username, password))
+		if (users[i].getName() == username && users[i].getPassword() == password)
 			return true;
 	}
 	return false;
@@ -81,7 +82,7 @@ void UsersHandling::eraseUsernameAndPass(string& username, string& password) con
 {
 	assert(username[username.size() - 1] != ' ');
 	assert(username[0] != ' ');
-	assert(myNameSpace::hasSpace(username) == true);
+	assert(AuxiliaryMethodsForAllClasses::hasSpace(username) == true);
 	while (username[username.size() - 1] != ' ')
 		username.pop_back();
 	username.pop_back();
@@ -93,14 +94,23 @@ void UsersHandling::eraseUsernameAndPass(string& username, string& password) con
 }
 void UsersHandling::putinFile(string username, string password) const
 {
-	ofstream file("users.txt", ios::app);
+	ofstream file("users.txt");
+	if(!file.good())
+		throw exception("The stream's not good");
+	file << size + 1 << endl;
+	for (int i = 0; i < size; i++)
+	{
+		if (!file.good())
+			throw exception("The stream's not good");
+		file << users[i].getName() << " " << users[i].getPassword() << endl;
+	}
 	file << username << " " << password << endl;
 	file.close();
 }
 void UsersHandling::removeUser(const string removeUser)
 {
 	bool isLogin = false;
-	myNameSpace::checkAdminPasswordAndUsername(isLogin);
+	AuxiliaryMethodsForAllClasses::checkAdminPasswordAndUsername(isLogin);
 	if (isLogin)
 	{
 		deserialize();
@@ -122,21 +132,25 @@ void UsersHandling::deserialize()
 {
 	string username, password;
 	ifstream file("users.txt");
-	while(!file.eof())
+	unsigned len = 0;
+	file >> len;
+	file.ignore();
+	while (len >= cap)
+		resize();
+	size = len;
+	for(int i = 0;i < size;i++)
 	{
 		if (!file.good())
-			throw "The stream's not good";
-		if (size >= cap)
-			resize();
-		myNameSpace::readNickAndPassFromFile(file, username, password);
-		users[size].setName(username);
-		users[size].setPassword(password);
-		size++;
+			throw exception("The stream's not good");
+		AuxiliaryMethodsForAllClasses::readNickAndPassFromFile(file, username, password);
+		users[i].setName(username);
+		users[i].setPassword(password);
 	}
 }
 void UsersHandling::serialize() const
 {
 	ofstream file("users.txt");
+	file << size << endl;
 	for (int i = 0; i < size; i++)
 		file << users[i].getName() << " " << users[i].getPassword() << endl;
 }
